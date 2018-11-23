@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ブログをWordpressからSphinxに乗り換えた話</title>
+    <meta name="description" content="ブログをWordpressからSphinxに乗り換えた話" >
+    <script>
+      var notesEnabled =false;
+      var sections = [];
+      var titleNotes = [];
+    </script>
+    <meta charset='utf-8'>
+
+    <meta property="og:title" content="ブログをWordpressからSphinxに乗り換えた話">
+    <meta property="og:description" content="ブログをWordpressからSphinxに乗り換えた話">
+
+    <meta name="twitter:title" content="ブログをWordpressからSphinxに乗り換えた話">
+    <meta name="twitter:description" content="ブログをWordpressからSphinxに乗り換えた話">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/notes.css" type="text/css" />
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+    <script>
+    </script>
+  </head>
+  <body style='display: none'>
+    
+  <div class="section" id="wordpresssphinx">
+<h1>ブログをWordpressからSphinxに乗り換えた話<a class="headerlink" href="#wordpresssphinx" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="id1">
+<h2>私とブログ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>1995年にパソコン購入。同時にパソコン通信（niftyサーブ）開始。</li>
+<li>1999年当時のプロバイダだったInfoWeb（現&#64;nifty）からホームページスペースを与えられたので、htmlを自分で書いてブログスタート。</li>
+<li>2004年html書くのめんどくさくなって、どっかのブログサービスでブログ開始。</li>
+<li>2006年フリーランスになったので、勉強のために自分でCMSを運営しようとhetemlと契約。Nucleus CMSにブログを乗り換え。</li>
+<li>2010年Wordpressの仕事が増えて、プラグインを作ったりしていた。Nucleus CMSの更新がほぼなくなり、hetemlがサポートするPHPのバージョンと合わなくなってくる。hetemlにWordpress簡単インストールというサービスができた機にWordpressに乗り換え。</li>
+<li>2016年Sphinx製の静的Webページに乗り換え</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>どうして乗り換えたか<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>PHPを書かなくなっているうちにhetemlのPHPがバージョン7になった。</li>
+<li>Wordpressがしょっちゅう更新しろ！と言ってきて、鬱陶しくなった。</li>
+<li>Wordpressにセキュリティーホールが見つかるたびにhetemlからお知らせが来て、対応しないといけないのがめんどくさくなってきた。</li>
+<li>ブログしかやってないので、はてなにでも乗り換えようか。。。</li>
+<li>セキュリティーとか気にしなくていい、静的HTMLに乗り換えよう！</li>
+<li>せっかく、Pythonかけるようになったし、Sphinxだ！</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>乗り換え方<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="curl">
+<h3>元のサイトをcurlする<a class="headerlink" href="#curl" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><strong>curl</strong> はHTTPアクセスをしてコンテンツを取得できるコマンドです。</p>
+<p>私のブログは記事に番号がついていてそれがURLでした。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">kamekokamekame</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">archives</span><span class="o">/</span><span class="mi">1207</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>↑こんなの</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">kamekokamekame</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">archives</span><span class="o">/</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="mi">9999</span><span class="p">]</span><span class="o">/</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;#1.html&quot;</span>
+</pre></div>
+</div>
+<p>これで、 <strong>[記事の番号].html</strong> というファイル名で取得できます。</p>
+</div>
+<div class="section" id="htmlmarkdown">
+<h3>htmlをMarkdownに変換<a class="headerlink" href="#htmlmarkdown" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>htmlを編集し続けるのが嫌だったので、どこにでも持っていきやすいMarkdownにPythonスクリプト書いて置き換えました。</p>
+<p>(ここが素敵だとかっこいいんですが、一回だけなんで、愚直に適当に書いてしまいました。見たかったらどうぞ [gist](<a class="reference external" href="https://gist.github.com/okusama27/66d184a5e7091b1e24948af66c205106">https://gist.github.com/okusama27/66d184a5e7091b1e24948af66c205106</a>))</p>
+</div>
+</div>
+<div class="section" id="sphinxhtml">
+<h2>Sphinxでhtmlを作ろう<a class="headerlink" href="#sphinxhtml" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id4">
+<h3>インストール<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 -m venv env
+$ pip install Sphinx commonmark recommonmark
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>プロジェクト作成<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sphinx-quickstart
+</pre></div>
+</div>
+<div class="section" id="conf-py">
+<h4>conf.pyの修正<a class="headerlink" href="#conf-py" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.rst&#39;</span><span class="p">,</span> <span class="s1">&#39;.md&#39;</span><span class="p">]</span>
+<span class="n">source_parsers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;.md&#39;</span><span class="p">:</span> <span class="s1">&#39;recommonmark.parser.CommonMarkParser&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="index-rst">
+<h4>index.rstを作成<a class="headerlink" href="#index-rst" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>ビルド</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p><strong>build/html</strong> フォルダの中身をサーバーにドーン！</p>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>まとめ<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>実はあまりPythonをわかっていなくても, Markdownが書ければ、いいだけな気がする。</li>
+<li>嫌になったら、Githubでブログを営むこともできるのでMarkdownにしておくのはいいと思う。</li>
+</ul>
+</div>
+<div class="section" id="rss">
+<h2>おまけ(rss)<a class="headerlink" href="#rss" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>feedのプラグインがなかったんで、feedを出力してくれるスクリプトも作りました。</p>
+<p>自分のMarkdownから、タイトルとか記事とか取るだけのスクリプト。（汚いですが、見たかったらどうぞ。 [gist](<a class="reference external" href="https://gist.github.com/okusama27/fc87c5f9ebd0b38590bcaa05a070736a">https://gist.github.com/okusama27/fc87c5f9ebd0b38590bcaa05a070736a</a>)）</p>
+<p>結局、 <strong>feedgenerator</strong> というのを使うと各情報を渡すだけでfeedできます。どーん。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># フィードを生成</span>
+<span class="k">return</span> <span class="n">feedgenerator</span><span class="o">.</span><span class="n">Rss201rev2Feed</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span><span class="n">link</span><span class="o">=</span><span class="n">link</span><span class="p">,</span><span class="n">feed_url</span><span class="o">=</span><span class="n">feed_url</span><span class="p">,</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span><span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>これはもうちょっと綺麗にしたいです。</p>
+</div>
+</div>
+
+
+  </body>
+  <div id="help">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+  </div>
+  <script type="text/javascript" src="_static/js/init.js"></script>
+  <script type="text/javascript" src="_static/js/notes.js"></script>
+  <script type="text/javascript" src="_static/js/slides.js"></script>
+</html>
