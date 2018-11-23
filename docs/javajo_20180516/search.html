@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>検索</title>
+    <meta name="description" content="検索" >
+    <script>
+      var notesEnabled =false;
+      var sections = [];
+      var titleNotes = [];
+    </script>
+    <meta charset='utf-8'>
+
+    <meta property="og:title" content="検索">
+    <meta property="og:description" content="検索">
+
+    <meta name="twitter:title" content="検索">
+    <meta name="twitter:description" content="検索">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/notes.css" type="text/css" />
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+    <script>
+    </script>
+  </head>
+  <body style='display: none'>
+    
+  <h1 id="search-documentation">検索</h1>
+  <div id="fallback" class="admonition warning">
+  <script type="text/javascript">$('#fallback').hide();</script>
+  <p>
+    検索機能を使うには JavaScript を有効にしてください。
+  </p>
+  </div>
+  <p>
+    このページからドキュメントを検索できます。キーワードを下のボックスに入力して、「検索」をクリックしてください。入力された全てのキーワードを含むページが検索されます。一部のキーワードしか含まないページは検索結果に表示されないので注意してください。
+  </p>
+  <form action="" method="get">
+    <input type="text" name="q" value="" />
+    <input type="submit" value="検索" />
+    <span id="search-progress" style="padding-left: 10px"></span>
+  </form>
+  
+  <div id="search-results">
+  
+  </div>
+
+  </body>
+  <div id="help">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+  </div>
+  <script type="text/javascript" src="_static/js/init.js"></script>
+  <script type="text/javascript" src="_static/js/notes.js"></script>
+  <script type="text/javascript" src="_static/js/slides.js"></script>
+</html>
