@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話</title>
+    <meta name="description" content="Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話" >
+    <script>
+      var notesEnabled =false;
+      var sections = [];
+      var titleNotes = [];
+    </script>
+    <meta charset='utf-8'>
+
+    <meta property="og:title" content="Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話">
+    <meta property="og:description" content="Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話">
+
+    <meta name="twitter:title" content="Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話">
+    <meta name="twitter:description" content="Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/notes.css" type="text/css" />
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+    <script>
+    </script>
+  </head>
+  <body style='display: none'>
+    
+  <div class="section" id="sphinxpotransifexsphinx">
+<h1>Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話<a class="headerlink" href="#sphinxpotransifexsphinx" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="line-block">
+<div class="line">Kameko Ohmura</div>
+<div class="line"><a class="reference external" href="https://github.com/okusama27">https://github.com/okusama27</a></div>
+</div>
+<div class="section" id="id1">
+<h2>アジェンダ<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li>自己紹介</li>
+<li>PyLadies Tokyoの紹介</li>
+<li>翻訳しNightの紹介</li>
+<li>Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話</li>
+<li>私とSphinx</li>
+<li>PyQの紹介</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>自己紹介<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<img alt="_images/whoami.png" class="align-left" src="_images/whoami.png" />
+</div>
+<div class="section" id="pyladies-tokyo">
+<h2>PyLadies Tokyo とは<a class="headerlink" href="#pyladies-tokyo" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>PyLadiesは，Pythonが好きな女性を結ぶ国際的なコミュニティです。</p>
+<p>Pythonが好きであれば初心者／熟練者問わずどなたでも参加できます。</p>
+<p>PyLadies Tokyoは,PyLadiesの東京支部として女性Pythonistaを繋ぐために活動しています。</p>
+<img alt="_images/pyladies_logo.png" src="_images/pyladies_logo.png" />
+<div class="section" id="id3">
+<h3>参加者募集中！<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>詳しくは、<a class="reference external" href="https://pyladiestokyo.github.io/">https://pyladiestokyo.github.io/</a> を御覧ください。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>Sphinxからpoファイル作ってTransifexで翻訳してから、Sphinxに戻した話<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</div>
+<div class="section" id="pyladies-kit">
+<h2>pyladies-kit<a class="headerlink" href="#pyladies-kit" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>PyLadies 本部に、どの地域でもPyLadiesを始められるように <a class="reference external" href="https://github.com/pyladies/pyladies-kit">pyladies-kit</a> が用意されています。</p>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ pip install pyladies
+$ pyladies handbook
+</pre></div>
+</td></tr></table></div>
+<p>これを <strong>翻訳して、本家に取り込んでもらおう!</strong> という目標のもと始まりました。</p>
+<p>まず、第１段階として <strong>行動規範</strong> と、 <strong>ハラスメントを受けた場合の対処法</strong> の部分をPyCon JP 2018までに翻訳する事になりました。</p>
+</div>
+<div class="section" id="sphinx">
+<h2>Sphinxが便利すぎる<a class="headerlink" href="#sphinx" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>本家のハンドブックがSphinxプロジェクトなので、簡単に翻訳できます。</p>
+<img alt="_images/image05.png" src="_images/image05.png" />
+</div>
+<div class="section" id="po">
+<h2>poファイルって見にくい<a class="headerlink" href="#po" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>生のpoファイル</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 283ad006df7242c59abb816f7d85b03f
+#: ../../about.rst:4
+msgid &quot;About&quot;
+msgstr &quot;&quot;  ←ここに翻訳を書く
+
+# 55b61f6216ec4b70a10a738011d5cc82
+#: ../../about.rst:6
+msgid &quot;&quot;
+&quot;We are an international mentorship group with a focus on helping more &quot;
+&quot;women become active participants and leaders in the Python open-source &quot;
+&quot;community. Our mission is to promote, educate and advance a diverse &quot;
+&quot;Python community through outreach, education, conferences, events and &quot;
+&quot;social gatherings.&quot;
+msgstr &quot;&quot;  ←ここに翻訳を書く
+
+# 3eeae7895cb74421a96d163b715a0835
+#: ../../about.rst:8
+msgid &quot;&quot;
+&quot;PyLadies also aims to provide a friendly support network for women and a &quot;
+&quot;bridge to the larger Python world. Anyone with an interest in Python is &quot;
+&quot;encouraged to participate!&quot;
+msgstr &quot;&quot;  ←ここに翻訳を書く
+</pre></div>
+</div>
+</div>
+<div class="section" id="transifex">
+<h2>Transifexが便利すぎる<a class="headerlink" href="#transifex" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<img alt="_images/image06.png" src="_images/image06.png" />
+</div>
+<div class="section" id="id6">
+<h2>目標達成<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>目標の <strong>行動規範</strong> と、 <strong>ハラスメントを受けた場合の対処法</strong> の部分の翻訳は終了しました。</p>
+<a class="reference internal image-reference" href="_images/image07.png"><img alt="_images/image07.png" src="_images/image07.png" style="height: 450px;" /></a>
+<p><a class="reference external" href="https://pyladiestokyo.github.io/coc/index.html">https://pyladiestokyo.github.io/coc/index.html</a></p>
+</div>
+<div class="section" id="id7">
+<h2>みんなありがとう！！<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="id8">
+<h3>延べ約30人の翻訳者の方！<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="id9">
+<h3>使い方を教えてくださったSphinxコミュティーの方！<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>これからもハンドブックの翻訳は続けていきますので、興味がある方は Slackの <strong>#handbook-translation</strong> まで！</p>
+<p>また、ハラスメントを受けた方は、スタッフにダイレクトメッセージを送るか、Slackの <strong>#pyladies-support</strong> まで！</p>
+<p>あと、 <strong>2018年11月28日</strong> に <strong>SphinxCon JP 2018</strong> が開催されます。connpassで募集してました。私も行くので、一緒に行きましょう！！</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>これからもPyLadies Tokyoをよろしくおねがいします！<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>いつでも参加をおまちしています。</p>
+<p>スタッフ募集中です。</p>
+<p>講師（女性）も募集中です。こんなことなら、話せるかも！などありましたらスタッフに声をかけてください！</p>
+<a class="reference internal image-reference" href="_images/pyladies_logo.png"><img alt="_images/pyladies_logo.png" src="_images/pyladies_logo.png" style="width: 400px;" /></a>
+</div>
+</div>
+
+
+  </body>
+  <div id="help">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+  </div>
+  <script type="text/javascript" src="_static/js/init.js"></script>
+  <script type="text/javascript" src="_static/js/notes.js"></script>
+  <script type="text/javascript" src="_static/js/slides.js"></script>
+</html>
